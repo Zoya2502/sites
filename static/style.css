@@ -1,0 +1,156 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+a { text-decoration: none; color: inherit; }
+
+/* Навигация */
+nav {
+    background-color: #333;
+    padding: 10px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+nav a { color: #fff; padding: 5px 10px; border-radius: 3px; }
+nav a:hover, nav a.active { background-color: #444; }
+.nav-btn { background: #0e639c; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+
+/* Главное меню */
+.main-menu { text-align: center; margin-top: 100px; }
+.menu-buttons { margin-top: 20px; }
+
+/* Сетка задач (Grid) */
+.task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+/* Обновляем стиль карточки */
+.task-card {
+    background: #252526;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    transition: 0.2s;
+    text-align: center;
+    position: relative; /* Чтобы наложить значок */
+    text-decoration: none; /* Убираем подчеркивание */
+    display: block;
+    color: inherit;
+}
+.task-card:hover { 
+    background: #37373d; 
+    border-color: #0e639c; 
+    transform: translateY(-2px);
+}
+
+/* Статусы задач */
+.task-card.solved {
+    border-left: 5px solid #28a745; /* Зеленая полоска */
+    background: #1e3a23;
+}
+.task-card.in-progress {
+    border-left: 5px solid #ffc107; /* Желтая полоска */
+    background: #3a3a1e;
+}
+
+/* Добавляем иконки статуса (опционально) */
+.task-card.solved::after {
+    content: "✔";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Рабочая область */
+.workspace { display: flex; flex-direction: column; height: 100%; }
+.task-description { background: #252526; padding: 15px; height: 15%; overflow-y: auto; border-bottom: 1px solid #444;}
+.editor-container { flex-grow: 1; position: relative; }
+#editor { position: absolute; top: 0; bottom: 0; left: 0; right: 0; font-size: 16px; }
+.controls { padding: 10px; background: #2d2d2d; display: flex; gap: 10px; }
+.console { height: 20%; background: #000; color: #0f0; padding: 10px; font-family: monospace; overflow-y: auto; }
+
+/* Кнопки */
+.btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; color: white; font-size: 14px; }
+.btn.run { background-color: #28a745; }
+.btn.check { background-color: #ffc107; color: black; }
+.btn.next { background-color: #17a2b8; }
+.btn.secondary { background-color: #666; }
+
+/* --- Страница справочника (Materials) --- */
+.materials-container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+}
+.sidebar {
+    width: 250px;
+    background: #252526;
+    border-right: 1px solid #444;
+    overflow-y: auto;
+    padding: 10px;
+}
+.topic-item {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+.topic-item:hover, .topic-item.active { background: #37373d; color: #fff; }
+.content-area {
+    flex-grow: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background: #1e1e1e;
+}
+.text-block pre { background: #000; padding: 10px; border-radius: 5px; border: 1px solid #444; }
+code { background: #333; padding: 2px 4px; border-radius: 3px; }
+
+/* --- Модальное окно --- */
+.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
+.modal-content { background-color: #252526; margin: 5% auto; padding: 20px; width: 80%; height: 80%; border-radius: 8px; display: flex; flex-direction: column; }
+.close { color: #aaa; float: right; font-size: 28px; cursor: pointer; align-self: flex-end; }
+
+.modal-body { display: flex; flex-grow: 1; overflow: hidden; margin-top: 10px; border: 1px solid #444; }
+.modal-sidebar { width: 30%; background: #1f1f1f; overflow-y: auto; border-right: 1px solid #444; }
+.modal-tab { padding: 10px; cursor: pointer; border-bottom: 1px solid #333; }
+.modal-tab:hover { background: #333; }
+.modal-text { width: 70%; padding: 20px; overflow-y: auto; background: #252526; }
+
+.btn.hint {
+    background-color: #6a1b9a; /* Фиолетовый цвет для подсказки */
+    color: white;
+}
+.btn.hint:hover {
+    background-color: #8e24aa;
+}
+
+/* Улучшим отображение текста в модальном окне */
+.text-block {
+    font-size: 16px;
+    line-height: 1.6;
+    white-space: pre-wrap; /* Чтобы сохранялись переносы строк */
+}
+
+.reset-container {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.btn.danger {
+    background-color: #dc3545; /* Красный цвет */
+    border: 1px solid #c82333;
+}
+.btn.danger:hover {
+    background-color: #c82333;
+}

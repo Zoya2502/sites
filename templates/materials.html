@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Справочник Python</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="/">Главная</a>
+        <a href="/solve">Задачи</a>
+        <a href="/materials" class="active">Справочник</a>
+    </nav>
+
+    <div class="materials-container">
+        <!-- Боковое меню разделов -->
+        <div class="sidebar">
+            <h3>Темы</h3>
+            <ul id="topicList">
+                {% for key in materials.keys() %}
+                <li onclick="showTopic('{{ loop.index0 }}')" class="topic-item" id="topic-btn-{{ loop.index0 }}">
+                    {{ key }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Область контента -->
+        <div class="content-area">
+            {% for key, val in materials.items() %}
+            <div id="topic-content-{{ loop.index0 }}" class="topic-content" style="display: none;">
+                <h1>{{ key }}</h1>
+                <div class="text-block">
+                    {{ val|safe }}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div id="welcome-msg" class="topic-content">
+                <h1>Справочник Python</h1>
+                <p>Выберите тему слева, чтобы начать чтение.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTopic(index) {
+            // Скрываем приветствие
+            document.getElementById('welcome-msg').style.display = 'none';
+            
+            // Скрываем все темы
+            var contents = document.getElementsByClassName('topic-content');
+            for(var i=0; i<contents.length; i++){
+                contents[i].style.display = 'none';
+            }
+            // Убираем подсветку кнопок
+            var btns = document.getElementsByClassName('topic-item');
+            for(var i=0; i<btns.length; i++){
+                btns[i].classList.remove('active');
+            }
+
+            // Показываем нужную
+            var el = document.getElementById('topic-content-' + index);
+            if(el) el.style.display = 'block';
+            
+            var btn = document.getElementById('topic-btn-' + index);
+            if(btn) btn.classList.add('active');
+        }
+    </script>
+</body>
+</html>

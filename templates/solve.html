@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Решение задач</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+</head>
+<body>
+
+    <nav>
+        <a href="/">Главная</a>
+        <a href="/solve">Список билетов</a>
+        <button id="openMaterialsBtn" class="nav-btn">Справочник (F1)</button>
+    </nav>
+
+    {% if task %}
+    <div class="workspace">
+        <div class="task-description">
+            <h2>{{ task.title }}</h2>
+            <p>{{ task.description }}</p>
+        </div>
+        <div class="editor-container">
+            <div id="editor">{{ task.initial_code }}</div>
+        </div>
+        <!-- Низ: Управление и консоль -->
+        <div class="controls">
+            <button onclick="runCode()" class="btn run">Запустить (Ctrl+Enter)</button>
+            <button onclick="checkSolution({{ task.id }})" class="btn check">Проверить</button>
+            <button onclick="resetCode()" class="btn secondary" title="Вернуть исходный код">Сброс</button>
+            
+            <!-- КНОПКА ПОДСКАЗКИ -->
+            {% if task.explanation %}
+            <button onclick="showExplanation()" class="btn hint" title="Ход решения">💡 Ход решения</button>
+            {% endif %}
+
+            {% if next_id %}
+            <a href="/solve?id={{ next_id }}" id="nextTaskBtn" class="btn next" style="display:none;">Вперед &rarr;</a>
+            {% endif %}
+        </div>
+    <!-- Скрытое поле для хранения исходного кода (для кнопки Сброс) -->
+    <textarea id="initialCodeStore" style="display:none;">{{ task.initial_code }}</textarea>
+        <div class="console">
+            <h3>Вывод программы:</h3>
+            <pre id="outputBlock">Ожидание запуска...</pre>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- Список задач GRID -->
+    <div class="container">
+        <h2>Выберите билет</h2>
+        
+        <!-- НОВАЯ КНОПКА СБРОСА ПРОГРЕССА -->
+        <div class="reset-container">
+            <button onclick="resetAllProgress()" class="btn danger">Сбросить весь прогресс</button>
+        </div>
+
+        <div class="task-grid">
+            {% for t in tasks_list %}
+            <a href="/solve?id={{ t.id }}" class="task-card" data-id="{{ t.id }}">
+                <h3>{{ t.title }}</h3>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Модальное окно С ТАБАМИ -->
+    <div id="materialsModal" class="modal">
+        <div class="modal-content large">
+            <span class="close">&times;</span>
+            <h2>Справочник</h2>
+            <div class="modal-body">
+                <div class="modal-sidebar">
+                    {% for key in materials.keys() %}
+                    <div class="modal-tab" onclick="openModalTab('{{ loop.index0 }}')">{{ key }}</div>
+                    {% endfor %}
+                </div>
+                <div class="modal-text">
+                    {% for key, val in materials.items() %}
+                    <div id="modal-tab-{{ loop.index0 }}" class="modal-tab-content" style="display:none;">
+                        <h3>{{ key }}</h3>
+                        {{ val|safe }}
+                    </div>
+                    {% endfor %}
+                    <div id="modal-welcome">Выберите тему слева</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Скрытое поле с текстом решения для JS -->
+    <div id="explanationStore" style="display:none;">{{ task.explanation }}</div>
+
+    <!-- Модальное окно "Ход решения" -->
+    <div id="explanationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeExplanation()">&times;</span>
+            <h2 style="color: #ffc107;">💡 Алгоритм решения</h2>
+            <div id="explanationText" class="text-block">
+                <!-- Сюда JS вставит текст -->
+            </div>
+            <p style="margin-top: 20px; color: #888; font-size: 0.9em;">
+                *Код не предоставляется, так как на экзамене его нужно писать самостоятельно.
+            </p>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
