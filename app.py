@@ -107,11 +107,11 @@ print(nums[-1])  # 40 (последний элемент)</pre>
         <h3>Методы списков</h3>
         <ul>
             <li><code>nums.append(50)</code> — добавить в конец.</li>
-            <li><code>nums.insert(1, 15)</code> — вставить по индексу.</li>
-            <li><code>nums.pop()</code> — удалить последний элемент.</li>
+            <li><code>nums.count(20)</code> — сколько раз встречается число 20.</li>
             <li><code>nums.sort()</code> — сортировать (навсегда меняет список).</li>
             <li><code>len(nums)</code> — длина списка.</li>
             <li><code>sum(nums)</code> — сумма чисел.</li>
+            <li><code>max(nums)</code> — максимальное число.</li>
         </ul>
     </div>
     """,
@@ -148,8 +148,7 @@ uniq = set(a) # {1, 2, 3}</pre>
         <pre>
 d = {"Alex": 5, "Bob": 3}
 print(d["Alex"]) # 5
-d["Bob"] = 4     # Изменить значение
-d["Eva"] = 5     # Добавить новую пару</pre>
+d["Bob"] = 4     # Изменить значение</pre>
     </div>
     """,
     "08. Функции": """
@@ -189,7 +188,7 @@ while x > 0:
         <h3>Библиотека itertools</h3>
         <p>Мощнейший инструмент для перебора вариантов.</p>
         <pre>
-from itertools import product, permutations
+from itertools import product
 
 # product - Размещение с повторением (слова из букв)
 # Слова длины 3 из букв A, B
@@ -210,7 +209,7 @@ from fnmatch import fnmatch
 if fnmatch("12345", "12*5"): ...</pre>
 
         <h3>Поиск делителей</h3>
-        <p>Эффективный перебор — до корня из числа.</p>
+        <p>Эффективный перебор — до корня из числа, либо просто перебор от 1 до N.</p>
     </div>
     """,
     "12. Рекурсия (ЕГЭ №16, №23)": """
@@ -226,329 +225,197 @@ def F(n):
     """
 }
 
-# --- ЗАДАЧИ 8 КЛАСС (РОВНО 20 ШТУК) ---
+# --- ЗАДАЧИ 8 КЛАСС (ОТ ПРОСТОГО К СЛОЖНОМУ) ---
 TASKS_8 = [
-    {
-        "id": 1, 
-        "title": "1. Переменные и вывод", 
-        "description": "<b>Дано:</b> Имя ученика — 'Ivan'.<br><br><b>Задача:</b><br>1. Создайте переменную <code>name</code> и присвойте ей строку 'Ivan'.<br>2. Выведите на экран фразу: <code>Привет, Ivan</code>", 
-        "initial_code": "# Ваш код здесь\n", 
-        "expected_output": "Привет, Ivan", 
-        "explanation": "<ul><li>Создайте переменную: <code>name = 'Ivan'</code></li><li>Используйте принт: <code>print('Привет,', name)</code></li></ul>"
-    },
-    {
-        "id": 2, 
-        "title": "2. Простая математика", 
-        "description": "<b>Дано:</b> Два числа: a = 10, b = 4.<br><br><b>Задача:</b><br>Выведите остаток от деления числа <code>a</code> на число <code>b</code>.", 
-        "initial_code": "a = 10\nb = 4\n", 
-        "expected_output": "2", 
-        "explanation": "<ul><li>Остаток от деления в Python обозначается символом <code>%</code>.</li><li>Напишите <code>print(a % b)</code>.</li></ul>"
-    },
-    {
-        "id": 3, 
-        "title": "3. Условный оператор", 
-        "description": "<b>Дано:</b> Число x = 50.<br><br><b>Задача:</b><br>Проверьте условие: если x больше 100, выведите 'Big', иначе выведите 'Small'.", 
-        "initial_code": "x = 50\n", 
-        "expected_output": "Small", 
-        "explanation": "<ul><li>Используйте конструкцию <code>if ... else ...</code></li><li><code>if x > 100: ... else: ...</code></li></ul>"
-    },
-    {
-        "id": 4, 
-        "title": "4. Циклы (Повторение)", 
-        "description": "<b>Задача:</b><br>Выведите слово 'Code' 3 раза. Каждое слово должно быть с новой строки.", 
-        "initial_code": "", 
-        "expected_output": "Code\nCode\nCode", 
-        "explanation": "<ul><li>Используйте цикл <code>for i in range(3):</code></li><li>Внутри цикла напишите <code>print('Code')</code></li></ul>"
-    },
-    {
-        "id": 5, 
-        "title": "5. Работа со списком", 
-        "description": "<b>Дано:</b> Список чисел: <code>a = [5, 10, 15]</code>.<br><br><b>Задача:</b><br>Найдите и выведите сумму всех чисел в этом списке.", 
-        "initial_code": "a = [5, 10, 15]\n", 
-        "expected_output": "30", 
-        "explanation": "<ul><li>Для суммирования есть готовая функция <code>sum()</code>.</li><li><code>print(sum(a))</code></li></ul>"
-    },
-    {
-        "id": 6, 
-        "title": "6. Замена в строке", 
-        "description": "<b>Дано:</b> Строка <code>s = 'Hello World'</code>.<br><br><b>Задача:</b><br>Замените в этой строке все пробелы на нижнее подчеркивание <code>_</code> и выведите результат.", 
-        "initial_code": "s = 'Hello World'\n", 
-        "expected_output": "Hello_World", 
-        "explanation": "<ul><li>У строк есть метод <code>.replace('старое', 'новое')</code>.</li><li><code>print(s.replace(' ', '_'))</code></li></ul>"
-    },
-    {
-        "id": 7, 
-        "title": "7. Индексы", 
-        "description": "<b>Дано:</b> Строка 'Python'.<br><br><b>Задача:</b><br>Выведите <b>последнюю</b> букву этой строки, используя отрицательный индекс.", 
-        "initial_code": "s = 'Python'\n", 
-        "expected_output": "n", 
-        "explanation": "<ul><li>В Python индекс <code>-1</code> означает последний элемент.</li><li><code>print(s[-1])</code></li></ul>"
-    },
-    {
-        "id": 8, 
-        "title": "8. Фильтрация (Четные числа)", 
-        "description": "<b>Дано:</b> Список <code>a = [1, 2, 3, 4]</code>.<br><br><b>Задача:</b><br>Используя цикл, выведите только четные числа из этого списка (каждое с новой строки).", 
-        "initial_code": "a = [1, 2, 3, 4]\n", 
-        "expected_output": "2\n4", 
-        "explanation": "<ul><li>Пройдитесь по списку: <code>for x in a:</code></li><li>Проверьте четность: <code>if x % 2 == 0:</code></li><li>Выведите x.</li></ul>"
-    },
-    {
-        "id": 9, 
-        "title": "9. Поиск максимума", 
-        "description": "<b>Задача:</b><br>Найдите максимальное число среди трех: 5, 12, 3. Выведите его.", 
-        "initial_code": "", 
-        "expected_output": "12", 
-        "explanation": "<ul><li>Используйте функцию <code>max(5, 12, 3)</code>.</li></ul>"
-    },
-    {
-        "id": 10, 
-        "title": "10. Обратный отсчет (While)", 
-        "description": "<b>Дано:</b> Переменная <code>x = 3</code>.<br><br><b>Задача:</b><br>Пока x больше 0, выводите x на экран, а затем уменьшайте его на 1.", 
-        "initial_code": "x = 3\n", 
-        "expected_output": "3\n2\n1", 
-        "explanation": "<ul><li><code>while x > 0:</code></li><li><code>print(x)</code></li><li><code>x -= 1</code></li></ul>"
-    },
-    {
-        "id": 11,
-        "title": "11. Срезы (Slicing)",
-        "description": "<b>Дано:</b> Строка <code>s = 'Programming'</code>.<br><br><b>Задача:</b><br>Выведите первые 3 буквы этого слова.",
-        "initial_code": "s = 'Programming'\n",
-        "expected_output": "Pro",
-        "explanation": "<ul><li>Используйте срез <code>[старт:конец]</code>.</li><li><code>print(s[:3])</code></li></ul>"
-    },
-    {
-        "id": 12,
-        "title": "12. Длина списка",
-        "description": "<b>Дано:</b> Список <code>a = [10, 20, 30, 40]</code>.<br><br><b>Задача:</b><br>Выведите количество элементов в этом списке.",
-        "initial_code": "a = [10, 20, 30, 40]\n",
-        "expected_output": "4",
-        "explanation": "<ul><li>Для получения длины используйте функцию <code>len(a)</code>.</li></ul>"
-    },
-    {
-        "id": 13,
-        "title": "13. Типы данных",
-        "description": "<b>Дано:</b> Строка <code>s = '15'</code> и число <code>n = 5</code>.<br><br><b>Задача:</b><br>Преобразуйте строку <code>s</code> в число, прибавьте к нему <code>n</code> и выведите результат.",
-        "initial_code": "s = '15'\nn = 5\n",
-        "expected_output": "20",
-        "explanation": "<ul><li>Функция <code>int(s)</code> превращает строку в число.</li><li><code>print(int(s) + n)</code></li></ul>"
-    },
-    {
-        "id": 14,
-        "title": "14. Добавление в список",
-        "description": "<b>Дано:</b> Список <code>a = [1, 2]</code>.<br><br><b>Задача:</b><br>Добавьте в конец списка число 3, а затем выведите весь список.",
-        "initial_code": "a = [1, 2]\n",
-        "expected_output": "[1, 2, 3]",
-        "explanation": "<ul><li>Используйте метод <code>.append(3)</code>.</li><li>Затем <code>print(a)</code>.</li></ul>"
-    },
-    {
-        "id": 15,
-        "title": "15. Подсчет символов",
-        "description": "<b>Дано:</b> Строка <code>s = 'banana'</code>.<br><br><b>Задача:</b><br>Посчитайте, сколько раз буква 'a' встречается в этом слове. Выведите число.",
-        "initial_code": "s = 'banana'\n",
-        "expected_output": "3",
-        "explanation": "<ul><li>Используйте метод <code>.count('a')</code>.</li></ul>"
-    },
-    {
-        "id": 16,
-        "title": "16. Сравнение типов",
-        "description": "<b>Задача:</b><br>Проверьте, равно ли число 5 строке '5'. Выведите True или False.",
-        "initial_code": "",
-        "expected_output": "False",
-        "explanation": "<ul><li>Число и строка — это разные типы данных.</li><li><code>print(5 == '5')</code></li></ul>"
-    },
-    {
-        "id": 17,
-        "title": "17. Логические операторы",
-        "description": "<b>Задача:</b><br>Вычислите значение выражения: <code>(True и False) или True</code>.<br>Используйте Python операторы <code>and</code>, <code>or</code>.",
-        "initial_code": "",
-        "expected_output": "True",
-        "explanation": "<ul><li><code>print((True and False) or True)</code></li></ul>"
-    },
-    {
-        "id": 18,
-        "title": "18. Функции",
-        "description": "<b>Задача:</b><br>Напишите функцию <code>plus(a, b)</code>, которая возвращает сумму двух чисел. Вызовите её для чисел 10 и 20.",
-        "initial_code": "def plus(a, b):\n    # Ваш код\n    pass\n\nprint(plus(10, 20))",
-        "expected_output": "30",
-        "explanation": "<ul><li>Внутри функции напишите <code>return a + b</code>.</li></ul>"
-    },
-    {
-        "id": 19,
-        "title": "19. Сортировка",
-        "description": "<b>Дано:</b> Список <code>a = [3, 1, 2]</code>.<br><br><b>Задача:</b><br>Отсортируйте список по возрастанию и выведите его.",
-        "initial_code": "a = [3, 1, 2]\n",
-        "expected_output": "[1, 2, 3]",
-        "explanation": "<ul><li>Используйте метод <code>a.sort()</code>.</li><li>Затем <code>print(a)</code>.</li></ul>"
-    },
-    {
-        "id": 20,
-        "title": "20. Финал: Повтор строки",
-        "description": "<b>Задача:</b><br>Выведите слово 'Python' 5 раз подряд через пробел в одну строку.",
-        "initial_code": "",
-        "expected_output": "Python Python Python Python Python",
-        "explanation": "<ul><li>Можно умножать строки: <code>s = 'Python ' * 5</code>.</li><li>Затем обрежьте лишний пробел: <code>print(s.strip())</code></li></ul>"
-    }
+    {"id": 1, "title": "1. Переменные", "description": "<b>Задача:</b> Создайте переменную <code>name</code> со значением 'Ivan' и выведите 'Привет, Ivan'.", "initial_code": "name = 'Ivan'\n", "expected_output": "Привет, Ivan", "explanation": "<ul><li>Используйте <code>print('Привет,', name)</code></li></ul>"},
+    {"id": 2, "title": "2. Арифметика", "description": "<b>Задача:</b> Даны a=10, b=4. Выведите остаток от деления a на b.", "initial_code": "a = 10\nb = 4\n", "expected_output": "2", "explanation": "<ul><li>Остаток от деления — <code>%</code>.</li><li><code>print(a % b)</code></li></ul>"},
+    {"id": 3, "title": "3. Условия", "description": "<b>Задача:</b> Если x > 100 выведите 'Big', иначе 'Small'. x=50.", "initial_code": "x = 50\n", "expected_output": "Small", "explanation": "<ul><li><code>if x > 100: ... else: ...</code></li></ul>"},
+    {"id": 4, "title": "4. Типы данных", "description": "<b>Задача:</b> Преобразуйте строку '15' в число, прибавьте 5 и выведите результат.", "initial_code": "s = '15'\n", "expected_output": "20", "explanation": "<ul><li><code>int(s) + 5</code></li></ul>"},
+    {"id": 5, "title": "5. Сравнение", "description": "<b>Задача:</b> Равны ли число 5 и строка '5'? Выведите True или False.", "initial_code": "", "expected_output": "False", "explanation": "<ul><li><code>print(5 == '5')</code></li></ul>"},
+    {"id": 6, "title": "6. Циклы", "description": "<b>Задача:</b> Выведите слово 'Code' 3 раза (каждое с новой строки).", "initial_code": "", "expected_output": "Code\nCode\nCode", "explanation": "<ul><li><code>for i in range(3): print('Code')</code></li></ul>"},
+    {"id": 7, "title": "7. While", "description": "<b>Задача:</b> Пока x > 0, выводить x и уменьшать на 1. (x=3)", "initial_code": "x = 3\n", "expected_output": "3\n2\n1", "explanation": "<ul><li><code>while x > 0: print(x); x -= 1</code></li></ul>"},
+    {"id": 8, "title": "8. Списки", "description": "<b>Задача:</b> Найдите сумму списка [5, 10, 15].", "initial_code": "a = [5, 10, 15]\n", "expected_output": "30", "explanation": "<ul><li><code>print(sum(a))</code></li></ul>"},
+    {"id": 9, "title": "9. Методы списка", "description": "<b>Задача:</b> Добавьте число 77 в список <code>a = [1]</code> и выведите список.", "initial_code": "a = [1]\n", "expected_output": "[1, 77]", "explanation": "<ul><li><code>a.append(77)</code></li></ul>"},
+    {"id": 10, "title": "10. Длина", "description": "<b>Задача:</b> Найдите длину списка [10, 20, 30, 40].", "initial_code": "a = [10, 20, 30, 40]\n", "expected_output": "4", "explanation": "<ul><li><code>len(a)</code></li></ul>"},
+    {"id": 11, "title": "11. Строки", "description": "<b>Задача:</b> Замените пробелы на '_': 'Hello World'.", "initial_code": "s = 'Hello World'\n", "expected_output": "Hello_World", "explanation": "<ul><li><code>s.replace(' ', '_')</code></li></ul>"},
+    {"id": 12, "title": "12. Индексы", "description": "<b>Задача:</b> Выведите последнюю букву слова 'Python'.", "initial_code": "s = 'Python'\n", "expected_output": "n", "explanation": "<ul><li><code>s[-1]</code></li></ul>"},
+    {"id": 13, "title": "13. Срезы", "description": "<b>Задача:</b> Выведите первые 3 символа строки 'Programming'.", "initial_code": "s = 'Programming'\n", "expected_output": "Pro", "explanation": "<ul><li><code>s[:3]</code></li></ul>"},
+    {"id": 14, "title": "14. Подсчет", "description": "<b>Задача:</b> Сколько раз 'a' встречается в 'banana'?", "initial_code": "s = 'banana'\n", "expected_output": "3", "explanation": "<ul><li><code>s.count('a')</code></li></ul>"},
+    {"id": 15, "title": "15. Четность", "description": "<b>Задача:</b> Выведите четные числа из [1, 2, 3, 4].", "initial_code": "a = [1, 2, 3, 4]\n", "expected_output": "2\n4", "explanation": "<ul><li><code>if x % 2 == 0:</code></li></ul>"},
+    {"id": 16, "title": "16. Максимум", "description": "<b>Задача:</b> Найдите максимальное число из 5, 12, 3.", "initial_code": "", "expected_output": "12", "explanation": "<ul><li><code>max(5, 12, 3)</code></li></ul>"},
+    {"id": 17, "title": "17. Логика", "description": "<b>Задача:</b> (True и False) или True. Что будет?", "initial_code": "", "expected_output": "True", "explanation": "<ul><li><code>print((True and False) or True)</code></li></ul>"},
+    {"id": 18, "title": "18. Функции", "description": "<b>Задача:</b> Напишите функцию sum2(a, b), возвращающую a+b. Выведите для 10, 20.", "initial_code": "def sum2(a, b):\n    pass\nprint(sum2(10, 20))", "expected_output": "30", "explanation": "<ul><li><code>return a + b</code></li></ul>"},
+    {"id": 19, "title": "19. Сортировка", "description": "<b>Задача:</b> Отсортируйте [3, 1, 2] по возрастанию.", "initial_code": "a = [3, 1, 2]\n", "expected_output": "[1, 2, 3]", "explanation": "<ul><li><code>a.sort()</code></li></ul>"},
+    {"id": 20, "title": "20. Финал", "description": "<b>Задача:</b> Выведите 'Python' 5 раз в одну строку через пробел.", "initial_code": "", "expected_output": "Python Python Python Python Python", "explanation": "<ul><li><code>('Python ' * 5).strip()</code></li></ul>"}
 ]
 
-# --- ЗАДАЧИ 11 КЛАСС (ЕГЭ - РОВНО 20 ШТУК) ---
+# --- ЗАДАЧИ 11 КЛАСС (ЕГЭ: ОТ ПРОСТОГО К СЛОЖНОМУ) ---
 TASKS_11 = [
+    # --- БАЗОВЫЙ УРОВЕНЬ ---
     {
         "id": 1, 
-        "title": "1. Логические выражения (№2)", 
-        "description": "<b>Дано:</b> Логическое выражение:<br><code>(x ИЛИ y) И (НЕ z)</code><br><br><b>Задача:</b><br>Вычислите значение этого выражения (True или False), если:<br>x = 1 (True)<br>y = 0 (False)<br>z = 0 (False).", 
-        "initial_code": "x = 1\ny = 0\nz = 0\n", 
-        "expected_output": "True", 
-        "explanation": "<ul><li>В Python: ИЛИ = <code>or</code>, И = <code>and</code>, НЕ = <code>not</code>.</li><li>Напишите: <code>print((x or y) and (not z))</code></li></ul>"
+        "title": "1. Анализ кода (ЕГЭ №6)", 
+        "description": "<b>Дано:</b> Фрагмент программы:<br><pre>s = 0\nn = 1\nwhile s < 50:\n    s = s + 10\n    n = n * 2</pre><b>Задача:</b><br>Определите, что выведет эта программа (значение n).", 
+        "initial_code": "s = 0\nn = 1\n# Допишите код\n", 
+        "expected_output": "32", 
+        "explanation": "<ul><li>Просто допишите <code>print(n)</code> и запустите.</li><li>Цикл выполнится 5 раз (s=10,20,30,40,50). 2^5 = 32.</li></ul>"
     },
     {
         "id": 2, 
-        "title": "2. Двоичная система (№5)", 
-        "description": "<b>Дано:</b> Число 60.<br><br><b>Задача:</b><br>Переведите число 60 в двоичную систему счисления. Выведите результат <b>без</b> префикса '0b'.", 
-        "initial_code": "n = 60\n", 
-        "expected_output": "111100", 
-        "explanation": "<ul><li>Функция <code>bin(n)</code> дает '0b111100'.</li><li>Используйте срез <code>[2:]</code>, чтобы отрезать первые два символа.</li></ul>"
+        "title": "2. Логика (ЕГЭ №2)", 
+        "description": "<b>Дано:</b> Выражение <code>(x ИЛИ y) И (НЕ z)</code>.<br><b>Задача:</b> Выведите True/False при x=1, y=0, z=0.", 
+        "initial_code": "x, y, z = 1, 0, 0\n", 
+        "expected_output": "True", 
+        "explanation": "<ul><li><code>print((x or y) and (not z))</code></li></ul>"
     },
     {
         "id": 3, 
-        "title": "3. Анализ цикла (№6)", 
-        "description": "<b>Дано:</b> Фрагмент программы:<br><pre>s = 0\nn = 1\nwhile s < 50:\n    s = s + 10\n    n = n * 2</pre><b>Задача:</b><br>Определите, что выведет эта программа (значение n), если в конце добавить <code>print(n)</code>.", 
-        "initial_code": "s = 0\nn = 1\n# Допишите цикл и вывод\n", 
-        "expected_output": "32", 
-        "explanation": "<ul><li>Просто перепишите код задачи в редактор и запустите.</li><li>Компьютер выполнит цикл 5 раз. 2 в 5-й степени это 32.</li></ul>"
+        "title": "3. Системы счисления (ЕГЭ №5)", 
+        "description": "<b>Задача:</b> Переведите число 60 в двоичную систему. Выведите результат без '0b'.", 
+        "initial_code": "n = 60\n", 
+        "expected_output": "111100", 
+        "explanation": "<ul><li><code>bin(n)[2:]</code></li></ul>"
     },
     {
         "id": 4, 
-        "title": "4. Комбинаторика (№8)", 
-        "description": "<b>Дано:</b> Буквы 'A', 'B'.<br><br><b>Задача:</b><br>Сколько существует различных слов длины 2, составленных из этих букв? (Буквы могут повторяться). Выведите число.", 
-        "initial_code": "count = 0\nletters = 'AB'\n", 
-        "expected_output": "4", 
-        "explanation": "<ul><li>Слова длины 2 — это два вложенных цикла.</li><li><code>for a in letters:</code></li><li>&nbsp;&nbsp;<code>for b in letters:</code></li><li>&nbsp;&nbsp;&nbsp;&nbsp;<code>count += 1</code></li></ul>"
+        "title": "4. Геометрия (ЕГЭ №6)", 
+        "description": "<b>Задача:</b> Черепаха рисует квадрат 10x10. Сколько целочисленных точек внутри?", 
+        "initial_code": "", 
+        "expected_output": "100", 
+        "explanation": "<ul><li>Площадь квадрата: 10 * 10 = 100.</li></ul>"
     },
     {
         "id": 5, 
-        "title": "5. Поиск в списке (№9)", 
-        "description": "<b>Дано:</b> Список чисел: <code>[1, 2, 3, 1, 4]</code>.<br><br><b>Задача:</b><br>Найдите число, которое встречается в этом списке ровно 2 раза. Выведите это число.", 
-        "initial_code": "a = [1, 2, 3, 1, 4]\n", 
-        "expected_output": "1", 
-        "explanation": "<ul><li>Переберите уникальные числа: <code>for x in set(a):</code></li><li>Проверьте количество: <code>if a.count(x) == 2:</code></li><li>Выведите x.</li></ul>"
+        "title": "5. Сортировка (ЕГЭ №26 База)", 
+        "description": "<b>Задача:</b> Дан список цен. Отсортируйте его по убыванию.", 
+        "initial_code": "a = [10, 50, 5, 100]\n", 
+        "expected_output": "[100, 50, 10, 5]", 
+        "explanation": "<ul><li><code>a.sort(reverse=True)</code></li></ul>"
     },
+
+    # --- СРЕДНИЙ УРОВЕНЬ (АЛГОРИТМЫ) ---
     {
         "id": 6, 
-        "title": "6. Редактор строк (№12)", 
-        "description": "<b>Дано:</b> Строка, состоящая из 10 единиц (<code>'1' * 10</code>).<br><b>Алгоритм:</b><br>Пока в строке нашлось '11': заменить первое вхождение '11' на '2'.<br><br><b>Задача:</b><br>Выведите строку, которая получится в результате.", 
-        "initial_code": "s = '1' * 10\n", 
-        "expected_output": "22222", 
-        "explanation": "<ul><li><code>while '11' in s:</code></li><li><code>s = s.replace('11', '2', 1)</code></li><li>Обязательно укажите <b>1</b> в replace, чтобы менять только одно вхождение.</li></ul>"
+        "title": "6. Комбинаторика (ЕГЭ №8)", 
+        "description": "<b>Задача:</b> Сколько слов длины 2 можно составить из букв 'A', 'B'? (Буквы повторяются).", 
+        "initial_code": "count = 0\nletters = 'AB'\n", 
+        "expected_output": "4", 
+        "explanation": "<ul><li>Два вложенных цикла по буквам.</li><li><code>count += 1</code> внутри.</li></ul>"
     },
     {
         "id": 7, 
-        "title": "7. IP-адреса (№13)", 
-        "description": "<b>Дано:</b> IP-адрес '10.0.0.1'.<br><br><b>Задача:</b><br>Найдите сумму чисел, из которых состоит этот адрес (10+0+0+1).", 
-        "initial_code": "ip = '10.0.0.1'\n", 
-        "expected_output": "11", 
-        "explanation": "<ul><li>Разбейте строку: <code>parts = ip.split('.')</code></li><li>Пройдитесь циклом, переведите части в int и сложите.</li></ul>"
+        "title": "7. Поиск в списке (ЕГЭ №9)", 
+        "description": "<b>Задача:</b> Найдите число, которое встречается в списке <code>[1, 2, 3, 1, 4]</code> ровно 2 раза.", 
+        "initial_code": "a = [1, 2, 3, 1, 4]\n", 
+        "expected_output": "1", 
+        "explanation": "<ul><li>Переберите уникальные <code>set(a)</code>.</li><li>Если <code>a.count(x) == 2</code>, выведите x.</li></ul>"
     },
     {
         "id": 8, 
-        "title": "8. Системы счисления (№14)", 
-        "description": "<b>Дано:</b> Число 100.<br><br><b>Задача:</b><br>Сколько цифр '1' содержится в троичной записи числа 100?", 
-        "initial_code": "x = 100\n", 
-        "expected_output": "2", 
-        "explanation": "<ul><li>Пока <code>x > 0</code>:</li><li>Проверяем последнюю цифру: <code>if x % 3 == 1: count += 1</code></li><li>Отбрасываем цифру: <code>x //= 3</code></li></ul>"
+        "title": "8. IP-адреса (ЕГЭ №13)", 
+        "description": "<b>Задача:</b> Найдите сумму чисел IP-адреса '10.0.0.1'.", 
+        "initial_code": "ip = '10.0.0.1'\n", 
+        "expected_output": "11", 
+        "explanation": "<ul><li><code>ip.split('.')</code></li><li>Суммируйте <code>int()</code> частей.</li></ul>"
     },
     {
         "id": 9, 
-        "title": "9. Рекурсия (№16)", 
-        "description": "<b>Дано:</b> Алгоритм вычисления функции F(n):<br>1. <code>F(n) = 1</code>, при n = 1.<br>2. <code>F(n) = n + F(n-1)</code>, при n > 1.<br><br><b>Задача:</b><br>Чему равно значение F(4)?", 
-        "initial_code": "def F(n):\n    # Напишите код функции\n    pass\n\nprint(F(4))", 
-        "expected_output": "10", 
-        "explanation": "<ul><li>Если <code>n == 1</code>, вернуть 1.</li><li>Иначе вернуть <code>n + F(n-1)</code>.</li></ul>"
+        "title": "9. Редактор строк (ЕГЭ №12)", 
+        "description": "<b>Алгоритм:</b> Пока нашлось '11', заменить '11' на '2' (один раз).<br><b>Дано:</b> Строка из 10 единиц.", 
+        "initial_code": "s = '1' * 10\n", 
+        "expected_output": "22222", 
+        "explanation": "<ul><li><code>while '11' in s:</code></li><li><code>s = s.replace('11', '2', 1)</code></li></ul>"
     },
     {
         "id": 10, 
-        "title": "10. Анализ пар (№17)", 
-        "description": "<b>Дано:</b> Список <code>[10, 5, 2]</code>.<br><br><b>Задача:</b><br>Найдите количество пар соседних элементов, сумма которых делится на 3.", 
-        "initial_code": "a = [10, 5, 2]\n", 
-        "expected_output": "1", 
-        "explanation": "<ul><li>Цикл до предпоследнего элемента: <code>range(len(a)-1)</code></li><li>Пара — это <code>a[i]</code> и <code>a[i+1]</code>.</li><li>Проверка: <code>(a[i] + a[i+1]) % 3 == 0</code>.</li></ul>"
+        "title": "10. Арифметика СС (ЕГЭ №14)", 
+        "description": "<b>Задача:</b> Сколько цифр '1' в троичной записи числа 100?", 
+        "initial_code": "x = 100\n", 
+        "expected_output": "2", 
+        "explanation": "<ul><li>Цикл <code>while x > 0</code>.</li><li>Если <code>x % 3 == 1</code>, счетчик +1.</li><li><code>x //= 3</code>.</li></ul>"
     },
+
+    # --- ПРОДВИНУТЫЙ УРОВЕНЬ ---
     {
         "id": 11, 
-        "title": "11. Теория игр (№19)", 
-        "description": "<b>Дано:</b> Куча камней S=8. За ход можно добавить +1 камень или умножить кол-во на 2.<br>Победа наступает, если камней >= 16.<br><br><b>Задача:</b><br>Выведите 'Yes', если можно выиграть ПЕРВЫМ же ходом.", 
-        "initial_code": "s = 8\n", 
-        "expected_output": "Yes", 
-        "explanation": "<ul><li>Проверьте два хода.</li><li>8 * 2 = 16. Это победа? Да.</li></ul>"
+        "title": "11. Делители (ЕГЭ №25)", 
+        "description": "<b>Задача:</b> Найдите все натуральные делители числа 6.", 
+        "initial_code": "n = 6\nres = []\n", 
+        "expected_output": "[1, 2, 3, 6]", 
+        "explanation": "<ul><li>Цикл <code>for i in range(1, n+1):</code></li><li>Если <code>n % i == 0</code>, добавить в список.</li></ul>"
     },
     {
         "id": 12, 
-        "title": "12. Динамика (№23)", 
-        "description": "<b>Дано:</b> Исполнитель, который умеет делать команды: <b>+1</b> и <b>*2</b>.<br><br><b>Задача:</b><br>Сколько существует программ (путей), которые преобразуют число <b>1</b> в число <b>3</b>?", 
-        "expected_output": "2", 
-        "explanation": "<ul><li>Функция перебирает все варианты.</li><li>Путь 1: 1 -> 2 -> 3 (+1, +1)</li><li>Путь 2: 1 -> (1*2)=2 -> 3 (*2, +1)</li><li>Итого 2 пути.</li></ul>"
+        "title": "12. Рекурсия (ЕГЭ №16)", 
+        "description": "<b>Дано:</b> F(1)=1; F(n) = n + F(n-1).<br><b>Задача:</b> Найти F(4).", 
+        "initial_code": "def F(n):\n    pass\nprint(F(4))", 
+        "expected_output": "10", 
+        "explanation": "<ul><li>База: <code>if n==1: return 1</code></li><li>Шаг: <code>return n + F(n-1)</code></li></ul>"
     },
     {
         "id": 13, 
-        "title": "13. Строки и цепочки (№24)", 
-        "description": "<b>Дано:</b> Строка <code>s = 'AAABAA'</code>.<br><br><b>Задача:</b><br>Найдите длину самой длинной цепочки, состоящей только из символов 'A'.", 
-        "initial_code": "s = 'AAABAA'\n", 
-        "expected_output": "3", 
-        "explanation": "<ul><li>Можно разбить строку по символу 'B': <code>s.split('B')</code>.</li><li>Получится список <code>['AAA', 'AA']</code>.</li><li>Найдите максимальную длину строки в этом списке.</li></ul>"
+        "title": "13. Обработка пар (ЕГЭ №17)", 
+        "description": "<b>Задача:</b> Найти кол-во пар соседей в <code>[10, 5, 2]</code>, сумма которых кратна 3.", 
+        "initial_code": "a = [10, 5, 2]\n", 
+        "expected_output": "1", 
+        "explanation": "<ul><li><code>for i in range(len(a)-1):</code></li><li>Проверка <code>(a[i]+a[i+1]) % 3 == 0</code>.</li></ul>"
     },
     {
         "id": 14, 
-        "title": "14. Маски файлов (№25)", 
-        "description": "<b>Задача:</b><br>Проверьте с помощью библиотеки <code>fnmatch</code>, соответствует ли число 42 маске <code>'4?'</code> (где ? - один любой символ). Выведите True или False.", 
+        "title": "14. Маски (ЕГЭ №25)", 
+        "description": "<b>Задача:</b> Проверьте, подходит ли число 42 под маску '4?'. ? означает один символ",  
         "expected_output": "True", 
-        "explanation": "<ul><li>Знак ? означает ровно один символ.</li><li>42 подходит под шаблон '4' + 'любой символ'.</li></ul>"
+        "explanation": "<ul><li>Для решения задачи стоит применить библиотеку.</li></ul>"
     },
     {
         "id": 15, 
-        "title": "15. Сортировка (№26)", 
-        "description": "<b>Дано:</b> Список <code>[10, 50, 5]</code>.<br><br><b>Задача:</b><br>Отсортируйте этот список по убыванию и выведите его.", 
-        "initial_code": "a = [10, 50, 5]\n", 
-        "expected_output": "[50, 10, 5]", 
-        "explanation": "<ul><li>Используйте <code>a.sort(reverse=True)</code>.</li></ul>"
+        "title": "15. Цепочки (ЕГЭ №24)", 
+        "description": "<b>Задача:</b> Макс. длина цепочки из 'A' в строке 'AAABAA'.", 
+        "initial_code": "s = 'AAABAA'\n", 
+        "expected_output": "3", 
+        "explanation": "<ul><li>Разбейте по 'B': <code>s.split('B')</code>.</li><li>Найдите макс длину элемента в списке.</li></ul>"
     },
+
+    # --- СЛОЖНЫЙ УРОВЕНЬ (HARD) ---
     {
         "id": 16, 
-        "title": "16. Эффективный перебор (№27)", 
-        "description": "<b>Дано:</b> Список <code>[10, 2, 5]</code>.<br><br><b>Задача:</b><br>Найдите максимально возможную сумму пары двух РАЗНЫХ чисел из этого списка.", 
-        "initial_code": "a = [10, 2, 5]\n", 
-        "expected_output": "15", 
-        "explanation": "<ul><li>Максимальная сумма — это сумма двух самых больших чисел.</li><li>10 + 5 = 15.</li></ul>"
+        "title": "16. Теория игр (ЕГЭ №19)", 
+        "description": "<b>Дано:</b> Куча=8. Ходы: +1, *2. Победа >= 16.<br><b>Задача:</b> Выведите 'Yes', если можно выиграть 1 ходом.", 
+        "initial_code": "s = 8\n", 
+        "expected_output": "Yes", 
+        "explanation": "<ul><li>Проверьте <code>8*2 >= 16</code>.</li></ul>"
     },
     {
         "id": 17, 
-        "title": "17. Делители числа", 
-        "description": "<b>Задача:</b><br>Найдите все натуральные делители числа 6 и выведите их в виде списка.", 
-        "initial_code": "n = 6\nres = []\n", 
-        "expected_output": "[1, 2, 3, 6]", 
-        "explanation": "<ul><li>Переберите числа от 1 до 6.</li><li>Если <code>6 % i == 0</code>, добавьте i в список.</li></ul>"
+        "title": "17. Динамика с ограничениями (№23)", 
+        "description": "<b>Дано:</b> Исполнитель с командами: <b>+1</b> и <b>+2</b>.<br><b>Задача:</b> Сколько существует программ, которые преобразуют число <b>2</b> в <b>12</b>, при этом траектория вычислений <b>не содержит</b> число <b>7</b>?", 
+        "initial_code": "def F(start, end):\n    # Допишите условия\n    pass\n\nprint(F(2, 12))", 
+        "expected_output": "25", 
+        "explanation": "<ul><li>Стандартная рекурсия: <code>return F(start+1, end) + F(start+2, end)</code>.</li><li><b>Ключевое условие:</b> Если <code>start == 7</code>, эта ветка траектории 'плохая' и должна вернуть 0 путей.</li><li>Добавьте проверку <code>if start == 7: return 0</code> ПЕРЕД рекурсивным вызовом.</li></ul>"
     },
     {
         "id": 18, 
-        "title": "18. Геометрия (Черепаха)", 
-        "description": "<b>Задача:</b><br>Сколько точек с целочисленными координатами находится внутри квадрата размером 2x2?", 
-        "initial_code": "", 
-        "expected_output": "4", 
-        "explanation": "<ul><li>Площадь квадрата равна произведению сторон.</li><li>2 * 2 = 4.</li></ul>"
+        "title": "18. Эффективность (ЕГЭ №27)", 
+        "description": "<b>Задача:</b> Найди максимальную сумму пары РАЗНЫХ чисел в <code>[10, 2, 5, 24, 1, 6]</code>.", 
+        "initial_code": "a = [10, 2, 5, 24, 1, 6]\n", 
+        "expected_output": "34", 
+        "explanation": "<ul><li>Сортируем. Берем два самых больших.</li></ul>"
     },
     {
         "id": 19, 
-        "title": "19. Проверка условий", 
-        "description": "<b>Дано:</b> Стороны треугольника: 3, 4, 5.<br><br><b>Задача:</b><br>Является ли этот треугольник прямоугольным (теорема Пифагора)? Выведите True или False.", 
-        "initial_code": "a, b, c = 3, 4, 5\n", 
+        "title": "19. Сложная логика (ЕГЭ №15)", 
+        "description": "<b>Задача:</b> Проверьте треугольник со сторонами 3, 4, 5 на прямоугольность (Пифагор).", 
+        "initial_code": "a,b,c = 3,4,5\n", 
         "expected_output": "True", 
-        "explanation": "<ul><li>Проверьте: <code>a**2 + b**2 == c**2</code></li></ul>"
+        "explanation": "<ul><li><code>a**2 + b**2 == c**2</code></li></ul>"
     },
     {
         "id": 20, 
-        "title": "20. Финал (Системы)", 
-        "description": "<b>Задача:</b><br>Переведите число 100 в восьмеричную систему счисления. Выведите результат без префикса '0o'.", 
-        "initial_code": "n = 100\n", 
-        "expected_output": "144", 
-        "explanation": "<ul><li>Функция <code>oct(n)</code>.</li><li>Срез <code>[2:]</code>.</li></ul>"
+        "title": "20. Финал (№24 Сложные цепочки)", 
+        "description": "<b>Дано:</b> Текстовый файл (здесь строка <code>s</code>), состоящий из символов A, B, C, D.<br><br><b>Задача:</b><br>Найдите максимальную длину подцепочки, которая не содержит букву 'D'.", 
+        "initial_code": "s = 'ABCAADDAABBCAАDDDA'\n", 
+        "expected_output": "7", 
+        "explanation": "<ul><li>Цепочки, не содержащие 'D', разделены буквой 'D'.</li><li>Разбейте строку по букве 'D': <code>parts = s.split('D')</code>.</li><li>Вы получите список подцепочек: <code>['ABCAA', 'AABBC', 'A']</code>.</li><li>Найдите максимальную длину элемента в этом списке. Можно циклом или так: <code>max(len(p) for p in parts)</code>.</li></ul>"
     }
 ]
 
