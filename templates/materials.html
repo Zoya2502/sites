@@ -7,38 +7,51 @@
 </head>
 <body>
     <nav>
-        <a href="/">Главная</a>
-        <a href="/solve">Задачи</a>
-        <a href="/materials" class="active">Справочник</a>
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <a href="/">Главная</a>
+            <a href="/solve?grade=8">Задачи</a>
+            <span style="color: #666;">|</span>
+            <a href="/materials" class="active" style="color: #4ec9b0;">Справочник</a>
+        </div>
     </nav>
 
-    <div class="materials-container">
-        <!-- Боковое меню разделов -->
-        <div class="sidebar">
-            <h3>Темы</h3>
-            <ul id="topicList">
+    <!-- Контейнер на всю высоту -->
+    <div class="materials-page-container">
+        
+        <!-- Левая колонка: Список тем -->
+        <div class="page-sidebar">
+            <div class="sidebar-header">Содержание</div>
+            <div class="sidebar-list">
                 {% for key in materials.keys() %}
-                <li onclick="showTopic('{{ loop.index0 }}')" class="topic-item" id="topic-btn-{{ loop.index0 }}">
+                <!-- Используем div вместо li, чтобы не было точек -->
+                <div onclick="showTopic('{{ loop.index0 }}')" class="sidebar-item" id="topic-btn-{{ loop.index0 }}">
                     {{ key }}
-                </li>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
 
-        <!-- Область контента -->
-        <div class="content-area">
+        <!-- Правая колонка: Текст -->
+        <div class="page-content">
             {% for key, val in materials.items() %}
             <div id="topic-content-{{ loop.index0 }}" class="topic-content" style="display: none;">
-                <h1>{{ key }}</h1>
-                <div class="text-block">
+                <div class="manual-block">
+                    <h1>{{ key }}</h1>
                     {{ val|safe }}
                 </div>
             </div>
             {% endfor %}
             
-            <div id="welcome-msg" class="topic-content">
-                <h1>Справочник Python</h1>
-                <p>Выберите тему слева, чтобы начать чтение.</p>
+            <!-- Приветственное сообщение -->
+            <div id="welcome-msg" class="topic-content" style="display: block;">
+                <div class="manual-block">
+                    <h1 style="color: #4ec9b0;">Справочник Python</h1>
+                    <p style="font-size: 1.2em;">⬅ Выберите тему в меню слева, чтобы начать чтение.</p>
+                    <div style="margin-top: 50px; padding: 20px; background: #252526; border-left: 5px solid #007bff; border-radius: 5px;">
+                        <p>Здесь собрана вся теория, необходимая для решения задач 8 и 11 классов.</p>
+                        <p>Вы также можете вызывать этот справочник прямо во время решения задач, нажав <b>F1</b>.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -46,24 +59,27 @@
     <script>
         function showTopic(index) {
             // Скрываем приветствие
-            document.getElementById('welcome-msg').style.display = 'none';
+            const welcome = document.getElementById('welcome-msg');
+            if(welcome) welcome.style.display = 'none';
             
             // Скрываем все темы
-            var contents = document.getElementsByClassName('topic-content');
-            for(var i=0; i<contents.length; i++){
+            const contents = document.getElementsByClassName('topic-content');
+            for(let i=0; i<contents.length; i++){
                 contents[i].style.display = 'none';
             }
-            // Убираем подсветку кнопок
-            var btns = document.getElementsByClassName('topic-item');
-            for(var i=0; i<btns.length; i++){
+            
+            // Убираем подсветку у всех кнопок
+            const btns = document.getElementsByClassName('sidebar-item');
+            for(let i=0; i<btns.length; i++){
                 btns[i].classList.remove('active');
             }
 
-            // Показываем нужную
-            var el = document.getElementById('topic-content-' + index);
+            // Показываем нужную тему
+            const el = document.getElementById('topic-content-' + index);
             if(el) el.style.display = 'block';
             
-            var btn = document.getElementById('topic-btn-' + index);
+            // Подсвечиваем кнопку
+            const btn = document.getElementById('topic-btn-' + index);
             if(btn) btn.classList.add('active');
         }
     </script>
