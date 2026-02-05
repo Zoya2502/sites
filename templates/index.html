@@ -7,10 +7,16 @@
 </head>
 <body>
     <div class="container main-menu">
-        <h1>Подготовка к программированию</h1>
+        <h1>Выберите уровень подготовки</h1>
+        
+        <!-- Кнопки теперь в контейнере с gap -->
         <div class="menu-buttons">
-            <a href="/solve" class="btn">Начать решать задачи</a>
-            <a href="/materials" class="btn secondary">Прочитать материал</a>
+            <a href="/solve?grade=8" class="btn" style="background-color: #28a745;">8 Класс (Основы)</a>
+            <a href="/solve?grade=11" class="btn" style="background-color: #007bff;">11 Класс (ЕГЭ)</a>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="/materials" class="btn secondary">Справочник материалов</a>
         </div>
     </div>
 </body>

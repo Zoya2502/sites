@@ -2,23 +2,28 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Решение задач</title>
+    <title>Решение задач - {{ grade }} класс</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
 </head>
 <body>
+    <!-- Скрытое поле для передачи класса в JS -->
+    <input type="hidden" id="currentGrade" value="{{ grade }}">
 
     <nav>
         <a href="/">Главная</a>
-        <a href="/solve">Список билетов</a>
+        <a href="/solve?grade={{ grade }}">Билеты ({{ grade }} класс)</a>
         <button id="openMaterialsBtn" class="nav-btn">Справочник (F1)</button>
     </nav>
 
     {% if task %}
     <div class="workspace">
         <div class="task-description">
+            <!-- safe нужен, если в описании тоже есть HTML (например <b>Дано</b>) -->
             <h2>{{ task.title }}</h2>
-            <p>{{ task.description }}</p>
+            <div style="font-size: 1.1em; line-height: 1.6;">
+                {{ task.description | safe }}
+            </div>
         </div>
         <div class="editor-container">
             <div id="editor">{{ task.initial_code }}</div>
@@ -35,7 +40,7 @@
             {% endif %}
 
             {% if next_id %}
-            <a href="/solve?id={{ next_id }}" id="nextTaskBtn" class="btn next" style="display:none;">Вперед &rarr;</a>
+            <a href="/solve?grade={{ grade }}&id={{ next_id }}" id="nextTaskBtn" class="btn next" style="display:none;">Вперед &rarr;</a>
             {% endif %}
         </div>
     <!-- Скрытое поле для хранения исходного кода (для кнопки Сброс) -->
@@ -49,16 +54,15 @@
     {% else %}
     <!-- Список задач GRID -->
     <div class="container">
-        <h2>Выберите билет</h2>
+        <h2>Билеты: {{ grade }} класс</h2>
         
-        <!-- НОВАЯ КНОПКА СБРОСА ПРОГРЕССА -->
         <div class="reset-container">
-            <button onclick="resetAllProgress()" class="btn danger">Сбросить весь прогресс</button>
+            <button onclick="resetAllProgress()" class="btn danger">Сбросить прогресс класса</button>
         </div>
 
         <div class="task-grid">
             {% for t in tasks_list %}
-            <a href="/solve?id={{ t.id }}" class="task-card" data-id="{{ t.id }}">
+            <a href="/solve?grade={{ grade }}&id={{ t.id }}" class="task-card" data-id="{{ t.id }}">
                 <h3>{{ t.title }}</h3>
             </a>
             {% endfor %}
@@ -89,8 +93,11 @@
             </div>
         </div>
     </div>
-    <!-- Скрытое поле с текстом решения для JS -->
-    <div id="explanationStore" style="display:none;">{{ task.explanation }}</div>
+    
+    <!-- ИСПРАВЛЕНИЕ ЗДЕСЬ: добавлен фильтр | safe -->
+    {% if task %}
+    <div id="explanationStore" style="display:none;">{{ task.explanation | safe }}</div>
+    {% endif %}
 
     <!-- Модальное окно "Ход решения" -->
     <div id="explanationModal" class="modal">
@@ -101,7 +108,7 @@
                 <!-- Сюда JS вставит текст -->
             </div>
             <p style="margin-top: 20px; color: #888; font-size: 0.9em;">
-                *Код не предоставляется, так как на экзамене его нужно писать самостоятельно.
+                *Код не всегда предоставляется полностью, чтобы вы могли подумать.
             </p>
         </div>
     </div>
